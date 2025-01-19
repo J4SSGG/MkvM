@@ -3,7 +3,7 @@
 # Default values are set as I use it when testing, no special meaning on them.
 services:
   backend:
-    image: 'mkvm:beta' # This software is in beta. Use at your own risk!
+    image: 'j4ssgg/mkvm:beta' # This software is in beta. Use at your own risk!
     # build:
     #   context: .
     #   dockerfile: Dockerfile
