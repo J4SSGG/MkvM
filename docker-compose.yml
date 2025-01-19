@@ -1,9 +1,13 @@
+# Make sure to read and understand this settings before executing the app.
+# This software is in beta. Use at your own risk!
+# Default values are set as I use it when testing, no special meaning on them.
 services:
   backend:
     image: 'mkvm:beta' # This software is in beta. Use at your own risk!
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    
     # Create as many volumes as you need; better if under /app to avoid conflicts. 
     # This is required so the app can read the files. You will use this later in environment variables (see below)
     volumes:
@@ -19,6 +23,6 @@ services:
       - Extensions=.mkv,.mp4,.avi                     # Not regex supported, just comma separated extensions with dot, case-insensitive
       - IncludeSubFolders=True                        # If you want to include subfolders in the search or only process file in the WorkingDirectory
       - UpdateListOfFilesProcessed=True               # Whether to save in the DB the list of files processed or not. 
-      - IgnoreListOfFilesProcessed=True               # Be careful with this, it will ignore the list of files processed and will process all files in the WorkingDirectory, generating a lot of files if ReplaceOriginal is False and/or IncludeSubFolders is True
+      - IgnoreListOfFilesProcessed=False              # Be careful with this, it will ignore the list of files processed and will process all files in the WorkingDirectory, generating a lot of files if ReplaceOriginal is False and/or IncludeSubFolders is True
       - TimeInMinutesBetweenExecutions=60             # This is the time in minutes between executions of the app
     
