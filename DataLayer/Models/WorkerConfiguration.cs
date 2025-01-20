@@ -27,7 +27,6 @@ public class WorkerConfiguration
                $"Extensions: {string.Join(", ", Extensions)}\n" +
                $"IncludeSubFolders: {IncludeSubFolders}\n" +
                $"UpdateListOfFilesProcessed: {UpdateListOfFilesProcessed}\n" +
-               $"IgnoreListOfFilesProcessed: {IgnoreListOfFilesProcessed}\n" +
-               $"Replacements: {string.Join(", ", Replacements)}";
+               $"IgnoreListOfFilesProcessed: {IgnoreListOfFilesProcessed}\n";
     }
 }

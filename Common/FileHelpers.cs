@@ -35,7 +35,11 @@ public static class FileHelpers
     /// <returns>A list of strings. If file has no content or cannot be read it returns an empty list. If file does not exist it returns null</returns>
     public static IEnumerable<string>? GetFileContent(string path)
     {
-        if (!File.Exists(path)) return null;
+        if (!File.Exists(path))
+        {
+            Console.WriteLine("File not found: " + path);
+            return null;
+        };
         
         // read file
         try
