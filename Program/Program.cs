@@ -24,6 +24,8 @@ var workerConfiguration = new WorkerConfiguration()
 
 workerConfiguration.Replacements = FileHelpers.GetFileContent(workerConfiguration.ReplacementsFile);
 
+Console.WriteLine("Worker configuration:");
+Console.WriteLine(workerConfiguration);
     
 IHostBuilder host = Host
     .CreateDefaultBuilder(args)

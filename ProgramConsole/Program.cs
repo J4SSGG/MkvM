@@ -24,4 +24,7 @@ var workerConfiguration = new WorkerConfiguration()
 var database = new SqLiteDataLayer(workerConfiguration);
 var worker = new MkvMWorker(database, workerConfiguration);
 
+Console.WriteLine("Worker configuration:");
+Console.WriteLine(workerConfiguration);
+
 worker.Process(CancellationToken.None);
