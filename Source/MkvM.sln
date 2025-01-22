@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Program", "Program\Program.csproj", "{F679F2E0-05EE-4A0D-81A2-18EDD88E7E2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MkvM", "MkvM\MkvM.csproj", "{F679F2E0-05EE-4A0D-81A2-18EDD88E7E2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MkvM.Core", "MkvM.Core\MkvM.Core.csproj", "{CA8B9A4E-F284-4EE4-9B41-39E85BA07380}"
 EndProject
@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{C8DED9B9-3053-4412-940A-E3C938DA9C9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramConsole", "ProgramConsole\ProgramConsole.csproj", "{6383768F-4353-4FDE-9968-5C90E8A71328}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MkvMConsole", "MkvMConsole\MkvMConsole.csproj", "{6383768F-4353-4FDE-9968-5C90E8A71328}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

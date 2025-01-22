@@ -19,7 +19,7 @@ var workerConfiguration = new WorkerConfiguration()
     UpdateListOfFilesProcessed = true,
     IgnoreListOfFilesProcessed = false,
     Replacements = FileHelpers.GetFileContent("/home/abraham/Videos/replacements.txt"),
-    TimeInMinutesBetweenExecutions = 0, // not used in this Program.cs
+    TimeInMinutesBetweenExecutions = 0, // not used in this MkvM.cs
     RenameMainVideoTitle = false
 };
 var database = new SqLiteDataLayer(workerConfiguration);
