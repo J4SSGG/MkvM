@@ -78,7 +78,7 @@ public class MkvMWorker : IHostedService
         foreach (var command in commands)
         {
             if (cancellationToken.IsCancellationRequested) return;
-            Console.WriteLine("Processing file: " + command.Key);
+            Console.WriteLine("Repacking file: " + command.Key);
             string repackedFileName = MkvMergeHandler.RepackFile(command.Key, command.Value, _workerConfiguration.ReplaceOriginal, _workerConfiguration.OverwriteExisting);
             if (_workerConfiguration.UpdateListOfFilesProcessed)
             {
@@ -90,7 +90,7 @@ public class MkvMWorker : IHostedService
                     _dataLayer.SaveProcessedFile(repackedFileName);
                 }
             }
-            Console.WriteLine("Done");
+            Console.WriteLine("Repacking finished: " + command.Key);
         }
     }
 
