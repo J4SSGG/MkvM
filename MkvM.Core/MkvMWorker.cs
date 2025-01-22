@@ -53,7 +53,16 @@ public class MkvMWorker : IHostedService
             if (cancellationToken.IsCancellationRequested) return;
             if (_workerConfiguration.IgnoreListOfFilesProcessed || !_dataLayer.IsFileProcessed(file))
             {
-                tracks.Add(file, MkvMergeHandler.ExtractTracks(file));
+                Console.WriteLine("Adding file to process: " + file);
+                var fileTracks = MkvMergeHandler.ExtractTracks(file);
+                if (fileTracks != null)
+                {
+                    tracks.Add(file, fileTracks);
+                }
+                else
+                {
+                    Console.WriteLine("No tracks found in file: " + file);
+                }
             }
             else
             {
@@ -63,7 +72,7 @@ public class MkvMWorker : IHostedService
         
         // Process tracks
         if (cancellationToken.IsCancellationRequested) return;
-        ProcessTrack(ref tracks, ref commands);
+        ProcessTracks(ref tracks, ref commands);
         
         // Execute commands
         foreach (var command in commands)
@@ -85,16 +94,42 @@ public class MkvMWorker : IHostedService
         }
     }
 
-    public void ProcessTrack(ref Dictionary<string, List<Track>> tracks, ref Dictionary<string, List<string>> commands)
+    public void ProcessTracks(ref Dictionary<string, List<Track>> tracks, ref Dictionary<string, List<string>> commands)
     {
         foreach (var key in tracks.Keys)
         {
-            Console.WriteLine("Reading file: " + key);
+            Console.WriteLine("Processing file: " + key);
+            
+            bool requiresProcessing = false; 
+            if (!_workerConfiguration.RenameMainVideoTitle) // In case we do not have to process the main track, it is worth checking if we need to process the rest
+            {
+                Console.WriteLine("Renaming main video title is disabled. Checking if we need to process the tracks...");
+                // Validate if we even need to process the tracks
+                var trackNames = tracks[key].Select(t => t.properties.track_name);
+                foreach (var track in trackNames)
+                {
+                    if (StringHelpers.RequiresSanitization(track, _workerConfiguration.Replacements))
+                    {
+                        requiresProcessing = true;
+                        break;
+                    }
+                }
+            }
+        
+            if (!requiresProcessing && !_workerConfiguration.RenameMainVideoTitle)
+            {
+                Console.WriteLine("No tracks require processing. Skipping file...");
+                continue;
+            }
+            
+            List<string> _commands = new();
             
             // 1. Rename file title 
-            List<string> _commands = new();
-            var newTitle = Path.GetFileNameWithoutExtension(key);
-            _commands.Add(Commands.BuildSetContainerTitleCommand(newTitle));
+            if (_workerConfiguration.RenameMainVideoTitle)
+            {
+                var newTitle = Path.GetFileNameWithoutExtension(key);
+                _commands.Add(Commands.BuildSetContainerTitleCommand(newTitle));
+            }
 
             // 2. Rename each track name
             var videoTracks = tracks[key].Where(x => x.type == "video");
@@ -103,19 +138,22 @@ public class MkvMWorker : IHostedService
 
             foreach (var track in videoTracks)
             {
+                Console.WriteLine("Processing video track: " + track.id);
                 _commands.Add(Commands.BuildSetContainerTitleCommand(Path.GetFileNameWithoutExtension(key)));
             }
 
             foreach (var track in audioTracks)
             {
-                var sanitizedTrackName = Common.StringHelpers.Sanitize(track.properties.track_name, _workerConfiguration.Replacements.ToArray());
+                Console.WriteLine("Processing audio track: " + track.id);
+                var sanitizedTrackName = Common.StringHelpers.Sanitize(track.properties.track_name, _workerConfiguration.Replacements);
                 var command = Commands.BuildSetTrackNameCommand(track.id, sanitizedTrackName);
                 _commands.Add(command);
             }
     
             foreach (var track in subtitlesTracks)
             {
-                var sanitizedTrackName = Common.StringHelpers.Sanitize(track.properties.track_name, _workerConfiguration.Replacements.ToArray());
+                Console.WriteLine("Processing subtitle track: " + track.id);
+                var sanitizedTrackName = Common.StringHelpers.Sanitize(track.properties.track_name, _workerConfiguration.Replacements);
                 var command = Commands.BuildSetTrackNameCommand(track.id, sanitizedTrackName);
                 _commands.Add(command);
             }

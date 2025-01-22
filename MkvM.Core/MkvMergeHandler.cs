@@ -53,11 +53,23 @@ public static class MkvMergeHandler
 
     public static MkvMetadata? ExtractMetadata(string file)
     {
-        var metadata = ExecuteCommands(file, null!, [Commands.BuildGetMetadataCommand()]);
+        string metadata = String.Empty;
+        try
+        {
+            metadata = ExecuteCommands(file, null!, [Commands.BuildGetMetadataCommand()]);
 
-        if (string.IsNullOrEmpty(metadata)) return default;
-        
-        return JsonSerializer.Deserialize<MkvMetadata>(metadata, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            if (string.IsNullOrEmpty(metadata)) return default;
+
+            return JsonSerializer.Deserialize<MkvMetadata>(metadata,
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error extracting metadata from file: " + file);
+            Console.WriteLine("Metadata: \n" + metadata);
+            Console.WriteLine(e);
+            return default;
+        }
     }
 
     public static string RepackFile(string file, List<string> commands, bool replaceOriginal = false, bool overwriteExisting = false)

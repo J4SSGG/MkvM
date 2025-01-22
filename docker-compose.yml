@@ -25,4 +25,5 @@ services:
       - UpdateListOfFilesProcessed=True               # Whether to save in the DB the list of files processed or not. 
       - IgnoreListOfFilesProcessed=False              # Be careful with this, it will ignore the list of files processed and will process all files in the WorkingDirectory, generating a lot of files if ReplaceOriginal is False and/or IncludeSubFolders is True
       - TimeInMinutesBetweenExecutions=60             # This is the time in minutes between executions of the app
+      - RenameMainVideoTitle=False                    # Allows to rename the main video title with the file name. This title is sometimes displayed in the video player. If this is disabled, none of the video tracks will be renamed.
     

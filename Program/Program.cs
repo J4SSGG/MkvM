@@ -9,17 +9,18 @@ using MkvM.Core;
 
 var workerConfiguration = new WorkerConfiguration()
 {
-    WorkingDirectory =              EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.WorkingDirectory)),
-    DatabaseFile =                  EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.DatabaseFile)),
-    ReplacementsFile =              EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.ReplacementsFile)),
-    ReplaceOriginal =               EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.ReplaceOriginal)),
-    OverwriteExisting =             EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.OverwriteExisting)),
-    IncludeAllExtensions =          EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IncludeAllExtensions)),
-    Extensions =                    EnvironmentHelper.LoadListEnvironmentVariable(nameof(WorkerConfiguration.Extensions)),
-    IncludeSubFolders =             EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IncludeSubFolders)),
-    UpdateListOfFilesProcessed =    EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.UpdateListOfFilesProcessed)),
-    IgnoreListOfFilesProcessed =    EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IgnoreListOfFilesProcessed)),
-    TimeInMinutesBetweenExecutions = EnvironmentHelper.LoadIntEnvironmentVariable(nameof(WorkerConfiguration.TimeInMinutesBetweenExecutions))
+    WorkingDirectory =                  EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.WorkingDirectory)),
+    DatabaseFile =                      EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.DatabaseFile)),
+    ReplacementsFile =                  EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.ReplacementsFile)),
+    ReplaceOriginal =                   EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.ReplaceOriginal)),
+    OverwriteExisting =                 EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.OverwriteExisting)),
+    IncludeAllExtensions =              EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IncludeAllExtensions)),
+    Extensions =                        EnvironmentHelper.LoadListEnvironmentVariable(nameof(WorkerConfiguration.Extensions)),
+    IncludeSubFolders =                 EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IncludeSubFolders)),
+    UpdateListOfFilesProcessed =        EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.UpdateListOfFilesProcessed)),
+    IgnoreListOfFilesProcessed =        EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IgnoreListOfFilesProcessed)),
+    TimeInMinutesBetweenExecutions =    EnvironmentHelper.LoadIntEnvironmentVariable(nameof(WorkerConfiguration.TimeInMinutesBetweenExecutions)),
+    RenameMainVideoTitle =              EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.RenameMainVideoTitle))
 };
 
 workerConfiguration.Replacements = FileHelpers.GetFileContent(workerConfiguration.ReplacementsFile);

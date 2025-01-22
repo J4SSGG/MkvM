@@ -14,7 +14,7 @@ public class WorkerConfiguration
     public bool UpdateListOfFilesProcessed { get; set; } // Save in the database the list of files processed. Default is true. If false, the list of files processed will not be updated.
     public bool IgnoreListOfFilesProcessed { get; set; } // Ignore the list of files processed. Default is false. If true, the list of files processed will not be checked (all files will be (re)processed).
     public IEnumerable<string> Replacements { get; set; } // The list of "values" to be replaced in the file tracks. The format is "old_value:new_value". If the list is empty, no replacements will be made (no files will be processed).
-
+    public bool RenameMainVideoTitle { get; set; } // Whether to rename the main video title with the file name. Default is false.
     public override string ToString()
     {
         return $"WorkingDirectory: {WorkingDirectory}\n" +
@@ -27,6 +27,7 @@ public class WorkerConfiguration
                $"Extensions: {string.Join(", ", Extensions)}\n" +
                $"IncludeSubFolders: {IncludeSubFolders}\n" +
                $"UpdateListOfFilesProcessed: {UpdateListOfFilesProcessed}\n" +
-               $"IgnoreListOfFilesProcessed: {IgnoreListOfFilesProcessed}\n";
+               $"IgnoreListOfFilesProcessed: {IgnoreListOfFilesProcessed}\n" +
+               $"RenameMainVideoTitle: {RenameMainVideoTitle}\n";
     }
 }

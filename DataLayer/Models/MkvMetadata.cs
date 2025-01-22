@@ -2,16 +2,17 @@ namespace DataLayer.Models;
 
 public class MkvMetadata
 {
-    public List<object> attachments { get; set; }
-    public List<Chapter> chapters { get; set; }
-    public Container container { get; set; }
-    public List<object> errors { get; set; }
-    public string file_name { get; set; }
-    public List<object> global_tags { get; set; }
-    public ulong identification_format_version { get; set; }
-    public List<object> track_tags { get; set; }
+    // Removing all properties except the ones used in the application.
+    // public List<object> attachments { get; set; }
+    // public List<Chapter> chapters { get; set; }
+    // public Container container { get; set; }
+    // public List<object> errors { get; set; }
+    // public string file_name { get; set; }
+    // public List<object> global_tags { get; set; }
+    // public ulong identification_format_version { get; set; }
+    // public List<object> track_tags { get; set; }
     public List<Track> tracks { get; set; }
-    public List<object> warnings { get; set; }
+    // public List<object> warnings { get; set; }
 }
 
 public class Chapter
