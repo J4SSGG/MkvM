@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{C8DED9B9-3053-4412-940A-E3C938DA9C9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MkvMConsole", "MkvMConsole\MkvMConsole.csproj", "{6383768F-4353-4FDE-9968-5C90E8A71328}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MkvM.Console", "MkvM.Console\MkvM.Console.csproj", "{6383768F-4353-4FDE-9968-5C90E8A71328}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
