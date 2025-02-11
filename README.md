@@ -45,7 +45,7 @@ services:
     # This is required so the app can read the files. You will use this later in environment variables (see below)
     volumes:
       - /your/path/to/movies:/app/media               # This is the path to the folder where the app will look for the files to process
-      - /your/path/to/documents:/app/config           # This is the path to the database file the app will create and use. The replacements file will be read from here too!
+      - /your/path/to/documents:/app/config           # This is the path to the database file, to the track_names.txt file, and to the replacements file. The app will create the database if it does not exist.
     environment:
       - WorkingDirectory=/app/media                   # This is the default value to read into /media; notice volume matches here ... you can change it to /media/subfolder if the volume contains subfolders: /your/path/to/movies/subfolder
       - DatabaseFile=/app/config/mkvm.sqlite          # Update this if you want to use a different name for the database file  (remember to update the volume too in the volumes section)
@@ -58,5 +58,5 @@ services:
       - UpdateListOfFilesProcessed=True               # Whether to save in the DB the list of files processed or not. 
       - IgnoreListOfFilesProcessed=False              # Be careful with this, it will ignore the list of files processed and will process all files in the WorkingDirectory, generating a lot of files if ReplaceOriginal is False and/or IncludeSubFolders is True
       - TimeInMinutesBetweenExecutions=60             # This is the time in minutes between executions of the app
-    
+      - ExtractTrackNamesOnly=False                   # Only extract track names of all files. This is useful to generate the replacements file. File is saved in /app/config/track_names.txt (if exists, it will be overwritten)
 ```

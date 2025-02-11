@@ -20,7 +20,8 @@ var workerConfiguration = new WorkerConfiguration()
     UpdateListOfFilesProcessed =        EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.UpdateListOfFilesProcessed)),
     IgnoreListOfFilesProcessed =        EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IgnoreListOfFilesProcessed)),
     TimeInMinutesBetweenExecutions =    EnvironmentHelper.LoadIntEnvironmentVariable(nameof(WorkerConfiguration.TimeInMinutesBetweenExecutions)),
-    RenameMainVideoTitle =              EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.RenameMainVideoTitle))
+    RenameMainVideoTitle =              EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.RenameMainVideoTitle)),
+    ExtractTrackNamesOnly =             EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.ExtractTrackNamesOnly))
 };
 
 workerConfiguration.Replacements = FileHelpers.GetFileContent(workerConfiguration.ReplacementsFile);
