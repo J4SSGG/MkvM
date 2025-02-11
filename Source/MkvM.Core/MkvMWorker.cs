@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System.Text;
+using Common;
 using DataLayer;
 using DataLayer.Models;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +19,6 @@ public class MkvMWorker : IHostedService
     
     public void Process(CancellationToken cancellationToken)
     {
-        
         IEnumerable<string> files;
         Dictionary<string, List<Track>> tracks = new();
         Dictionary<string, List<string>> commands = new();
@@ -70,6 +70,25 @@ public class MkvMWorker : IHostedService
             }
         }
         
+        
+        if (_workerConfiguration.ExtractTrackNamesOnly)
+        {
+            var trackNames = tracks.SelectMany(x => x.Value.Select(t => t.properties.track_name)).ToArray();
+            // Sort descending
+            Array.Sort(trackNames, (a, b) => string.Compare(a, b) * -1);
+            
+            string content = string.Join("\n", trackNames);
+            
+            string outputFileName = Path.Combine(_workerConfiguration.WorkingDirectory, "track_names.txt");
+            
+            if (File.Exists(outputFileName))
+                File.Delete(outputFileName);
+
+            File.WriteAllText(outputFileName, content, Encoding.UTF8);
+            
+            return;
+        } else { /*continue*/ }
+        
         // Process tracks
         if (cancellationToken.IsCancellationRequested) return;
         ProcessTracks(ref tracks, ref commands);
@@ -77,20 +96,30 @@ public class MkvMWorker : IHostedService
         // Execute commands
         foreach (var command in commands)
         {
-            if (cancellationToken.IsCancellationRequested) return;
-            Console.WriteLine("Repacking file: " + command.Key);
-            string repackedFileName = MkvMergeHandler.RepackFile(command.Key, command.Value, _workerConfiguration.ReplaceOriginal, _workerConfiguration.OverwriteExisting);
-            if (_workerConfiguration.UpdateListOfFilesProcessed)
+            try
             {
-                // Save processed files
-                _dataLayer.SaveProcessedFile(command.Key);
-                if (repackedFileName != command.Key)
+                if (cancellationToken.IsCancellationRequested) return;
+                Console.WriteLine("Repacking file: " + command.Key);
+                string repackedFileName = MkvMergeHandler.RepackFile(command.Key, command.Value,
+                    _workerConfiguration.ReplaceOriginal, _workerConfiguration.OverwriteExisting);
+                if (_workerConfiguration.UpdateListOfFilesProcessed)
                 {
-                    // also saved the repacked file to avoid processing it again in the future runs
-                    _dataLayer.SaveProcessedFile(repackedFileName);
+                    // Save processed files
+                    _dataLayer.SaveProcessedFile(command.Key);
+                    if (repackedFileName != command.Key)
+                    {
+                        // also saved the repacked file to avoid processing it again in the future runs
+                        _dataLayer.SaveProcessedFile(repackedFileName);
+                    }
                 }
+
+                Console.WriteLine("Repacking finished: " + command.Key);
             }
-            Console.WriteLine("Repacking finished: " + command.Key);
+            catch (Exception e)
+            {
+                Console.WriteLine("Error processing file: " + command.Key);
+                Console.WriteLine(e);
+            }
         }
     }
 
@@ -161,7 +190,7 @@ public class MkvMWorker : IHostedService
             commands.Add(key, _commands);
         }
     }
-
+    
     public Task StartAsync(CancellationToken cancellationToken)
     {
         do
