@@ -73,7 +73,8 @@ public class MkvMWorker : IHostedService
         
         if (_workerConfiguration.ExtractTrackNamesOnly)
         {
-            var trackNames = tracks.SelectMany(x => x.Value.Select(t => t.properties.track_name)).ToArray();
+            var trackNames = tracks.SelectMany(x => x.Value.Select(t => t.properties.track_name)).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            
             // Sort descending
             Array.Sort(trackNames, (a, b) => string.Compare(a, b) * -1);
             
