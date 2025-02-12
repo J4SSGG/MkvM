@@ -48,8 +48,10 @@ services:
       - /your/path/to/documents:/app/config           # This is the path to the database file, to the track_names.txt file, and to the replacements file. The app will create the database if it does not exist.
     environment:
       - WorkingDirectory=/app/media                   # This is the default value to read into /media; notice volume matches here ... you can change it to /media/subfolder if the volume contains subfolders: /your/path/to/movies/subfolder
-      - DatabaseFile=/app/config/mkvm.sqlite          # Update this if you want to use a different name for the database file  (remember to update the volume too in the volumes section)
-      - ReplacementsFile=/app/config/replacements.txt # Update this if you want to use a different name for the replacements file (remember to update the volume too in the volumes section)
+      - ConfigurationDirectory=/app/config            # This is the default value to read and save the configuration files, which includes the database file, the track_names.txt file, and the replacements file; notice volume matches here
+      - DatabaseFile=mkvm.sqlite                      # Update this if you want to use a different name for the database file  (remember to update the volume too in the volumes section)
+      - ReplacementsFile=replacements.txt             # Update this if you want to use a different name for the replacements file (remember to update the volume too in the volumes section)
+      - TrackNamesFile=track_names.txt                # Update this if you want to use a different name for the track_names file (remember to update the volume too in the volumes section)
       - ReplaceOriginal=False                         # If you want to replace the original file with the new one or generate a new file with a different name
       - OverwriteExisting=False                       # If you want to overwrite the new file if it already exists - not sure if this will ever be useful, but it's there
       - IncludeAllExtensions=False                    # Make sure to not include all extensions if under WorkingDirectory there are files that are not videos, this will make the app to crash (I am too lazy to fix it at this point)

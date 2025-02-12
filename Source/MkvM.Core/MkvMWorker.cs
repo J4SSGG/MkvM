@@ -73,20 +73,32 @@ public class MkvMWorker : IHostedService
         
         if (_workerConfiguration.ExtractTrackNamesOnly)
         {
+            Console.WriteLine("Extracting track names only...");
+            
             var trackNames = tracks.SelectMany(x => x.Value.Select(t => t.properties.track_name)).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            
+            // select distinct
+            trackNames = trackNames.Distinct().ToArray();
             
             // Sort descending
             Array.Sort(trackNames, (a, b) => string.Compare(a, b) * -1);
             
             string content = string.Join("\n", trackNames);
             
-            string outputFileName = Path.Combine(_workerConfiguration.WorkingDirectory, "track_names.txt");
+            Console.WriteLine("Track names extracted: {0}", trackNames.Length);
             
-            if (File.Exists(outputFileName))
-                File.Delete(outputFileName);
+            string outputFileName = Path.Combine(_workerConfiguration.ConfigurationDirectory, _workerConfiguration.TrackNamesFile);
 
+            if (File.Exists(outputFileName))
+            {
+                Console.WriteLine("Removing existing file: " + outputFileName);
+                File.Delete(outputFileName);
+            }
+            
+            Console.WriteLine("Saving track names to file: " + outputFileName);
             File.WriteAllText(outputFileName, content, Encoding.UTF8);
             
+            Console.WriteLine("Track names saved to file: " + outputFileName);
             return;
         } else { /*continue*/ }
         

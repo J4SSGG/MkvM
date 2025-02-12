@@ -3,8 +3,10 @@ namespace DataLayer.Models;
 public class WorkerConfiguration
 {
     public string WorkingDirectory { get; set; } // The main folder to be explored for movies and videos.
-    public string DatabaseFile { get; set; } // The path to the SQLiteDataLayer database file.
-    public string ReplacementsFile { get; set; } // The path to the Replacements file.
+    public string ConfigurationDirectory { get; set; } // The main folder to read and save configuration files.
+    public string DatabaseFile { get; set; } // The name for the SQLiteDataLayer database file.
+    public string ReplacementsFile { get; set; } // The name for the Replacements file.
+    public string TrackNamesFile { get; set; } // The name for the Track Names file. 
     public int TimeInMinutesBetweenExecutions { get; set; } // Default is 60 minutes.
     public bool ReplaceOriginal { get; set; } // Whether to replace the original files with the processed ones, or leave them untouched.
     public bool OverwriteExisting { get; set; } // Whether to overwrite existing files with the same name as the output file. Original files are never overwritten with this setting.
@@ -19,8 +21,10 @@ public class WorkerConfiguration
     public override string ToString()
     {
         return $"WorkingDirectory: {WorkingDirectory}\n" +
+               $"ConfigurationDirectory: {ConfigurationDirectory}\n" +
                $"DatabaseFile: {DatabaseFile}\n" +
                $"ReplacementsFile: {ReplacementsFile}\n" +
+               $"TrackNamesFile: {TrackNamesFile}\n" +
                $"TimeInMinutesBetweenExecutions: {TimeInMinutesBetweenExecutions}\n" +
                $"ReplaceOriginal: {ReplaceOriginal}\n" +
                $"OverwriteExisting: {OverwriteExisting}\n" +
@@ -29,6 +33,7 @@ public class WorkerConfiguration
                $"IncludeSubFolders: {IncludeSubFolders}\n" +
                $"UpdateListOfFilesProcessed: {UpdateListOfFilesProcessed}\n" +
                $"IgnoreListOfFilesProcessed: {IgnoreListOfFilesProcessed}\n" +
-               $"RenameMainVideoTitle: {RenameMainVideoTitle}\n";
+               $"RenameMainVideoTitle: {RenameMainVideoTitle}\n" +
+               $"ExtractTrackNamesOnly: {ExtractTrackNamesOnly}\n";
     }
 }

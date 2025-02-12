@@ -10,8 +10,10 @@ using MkvM.Core;
 var workerConfiguration = new WorkerConfiguration()
 {
     WorkingDirectory =                  EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.WorkingDirectory)),
+    ConfigurationDirectory =            EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.ConfigurationDirectory)),
     DatabaseFile =                      EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.DatabaseFile)),
     ReplacementsFile =                  EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.ReplacementsFile)),
+    TrackNamesFile =                    EnvironmentHelper.LoadStringEnvironmentVariable(nameof(WorkerConfiguration.TrackNamesFile)),
     ReplaceOriginal =                   EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.ReplaceOriginal)),
     OverwriteExisting =                 EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.OverwriteExisting)),
     IncludeAllExtensions =              EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.IncludeAllExtensions)),
@@ -24,7 +26,8 @@ var workerConfiguration = new WorkerConfiguration()
     ExtractTrackNamesOnly =             EnvironmentHelper.LoadBoolEnvironmentVariable(nameof(WorkerConfiguration.ExtractTrackNamesOnly))
 };
 
-workerConfiguration.Replacements = FileHelpers.GetFileContent(workerConfiguration.ReplacementsFile);
+var replacementsFilePath = Path.Combine(workerConfiguration.ConfigurationDirectory, workerConfiguration.ReplacementsFile);
+workerConfiguration.Replacements = FileHelpers.GetFileContent(replacementsFilePath);
 
 Console.WriteLine("Worker configuration:");
 Console.WriteLine(workerConfiguration);

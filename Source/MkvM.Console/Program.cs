@@ -9,8 +9,10 @@ using MkvM.Core;
 var workerConfiguration = new WorkerConfiguration()
 {
     WorkingDirectory = "/home/abraham/Videos",
-    DatabaseFile = "/home/abraham/Videos/database.sqlite",
-    ReplacementsFile = "/home/abraham/Videos/replacements.txt",
+    ConfigurationDirectory = "/home/abraham/Videos",
+    DatabaseFile = "database.sqlite",
+    ReplacementsFile = "replacements.txt",
+    TrackNamesFile = "track_names.txt",
     ReplaceOriginal = true,
     OverwriteExisting = false,
     IncludeAllExtensions = false,

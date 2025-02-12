@@ -10,9 +10,10 @@ public class SqLiteDataLayer : IDataLayer
 
     public SqLiteDataLayer(WorkerConfiguration workerConfiguration)
     {
-        _connection = new SqliteConnection("Data Source=" + workerConfiguration.DatabaseFile);
+        var sqlFilePath = Path.Combine(workerConfiguration.ConfigurationDirectory, workerConfiguration.DatabaseFile);
+        _connection = new SqliteConnection("Data Source=" + sqlFilePath);
 
-        if (!File.Exists(workerConfiguration.DatabaseFile))
+        if (!File.Exists(sqlFilePath))
         {
             InitializeProcessedFilesDatabase();
         }

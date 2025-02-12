@@ -45,7 +45,7 @@ public static class FileHelpers
         try
         {
             var content = File.ReadAllLines(path);
-            return content.AsEnumerable();
+            return content.Distinct(); // remove duplicates
         }
         catch (Exception e)
         {
