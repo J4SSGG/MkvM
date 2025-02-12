@@ -80,8 +80,8 @@ public class MkvMWorker : IHostedService
             // select distinct
             trackNames = trackNames.Distinct().ToArray();
             
-            // Sort descending
-            Array.Sort(trackNames, (a, b) => string.Compare(a, b) * -1);
+            // Sort longest first
+            Array.Sort(trackNames, (a, b) => a.Length < b.Length ? 1 : -1);
             
             string content = string.Join("\n", trackNames);
             

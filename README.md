@@ -61,7 +61,7 @@ services:
 ```
 ## Replacements File
 
-This file is a simple text file with the values you want to remove from the track names. There are some details to keep in mind (the app already does this for you, but it's good to know):
+This file is a simple text file with the values you want to remove from the track names. There are some details to keep in mind:
 
 
 - The file is read line by line as-is, so each line is a different value to remove.
@@ -81,4 +81,10 @@ Track
 a
 ```
 
-Again, the app already does this for you, but be careful when adding values to the replacements file. Like the last line being an `a`, it will remove all `a` characters from the track names.
+The app already does part of these work for you, but be careful when adding values to the replacements file. For example, the last line being an `a`, it will remove all `a` characters from the track names. 
+
+### Where to get a list of values to remove?
+
+You can use the app with the `ExtractTrackNamesOnly` set to `True` to generate the `track_names.txt` file. This file will contain all the different track names found in the files. You can then use this file to generate the replacements file.
+I do not provide a file with the track names for obvious reasons, but you can generate it yourself or maybe someone will share it somewhere else 🤷‍♂️.
+
