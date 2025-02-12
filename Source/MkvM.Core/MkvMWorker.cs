@@ -147,7 +147,11 @@ public class MkvMWorker : IHostedService
             {
                 Console.WriteLine("Renaming main video title is disabled. Checking if we need to process the tracks...");
                 // Validate if we even need to process the tracks
+                
+                // 1. Get all track names for the current file
                 var trackNames = tracks[key].Select(t => t.properties.track_name);
+                
+                // 2. Check if any track requires processing (it contains any of the replacements value from the replacements file)
                 foreach (var track in trackNames)
                 {
                     if (StringHelpers.RequiresSanitization(track, _workerConfiguration.Replacements))
@@ -160,6 +164,7 @@ public class MkvMWorker : IHostedService
         
             if (!requiresProcessing && !_workerConfiguration.RenameMainVideoTitle)
             {
+                // This avoids unnecessary processing of files (rewriting the same file with the same content)
                 Console.WriteLine("No tracks require processing. Skipping file...");
                 continue;
             }

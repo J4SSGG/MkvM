@@ -15,7 +15,7 @@ public static class StringHelpers
     
     public static bool RequiresSanitization(string input, IEnumerable<string> valuesToRemove, StringComparison matchType = StringComparison.OrdinalIgnoreCase)
     {
-        if (input is null) return false;
+        if (string.IsNullOrWhiteSpace(input)) return false;
         
         foreach (var value in valuesToRemove)
         {

@@ -44,8 +44,16 @@ public static class FileHelpers
         // read file
         try
         {
-            var content = File.ReadAllLines(path);
-            return content.Distinct(); // remove duplicates
+            var content = File
+                .ReadAllLines(path)
+                .Distinct() // remove duplicates
+                .Where(x => !string.IsNullOrWhiteSpace(x)) // remove empty lines
+                .ToArray();
+            
+            // sort by length, descending
+            Array.Sort(content, (a, b) => a.Length < b.Length ? 1 : -1);
+
+            return content;
         }
         catch (Exception e)
         {

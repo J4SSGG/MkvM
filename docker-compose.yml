@@ -1,30 +1,25 @@
-# Make sure to read and understand this settings before executing the app.
+# Make sure to read and understand these settings before executing the app.
 # This software is in beta. Use at your own risk!
+# Depending on the configuration set, any processed file may be overwritten, so make sure to have a backup of your files.
 # Default values are set as I use it when testing, no special meaning on them.
 services:
   backend:
     image: 'j4ssgg/mkvm:beta' # This software is in beta. Use at your own risk!
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    
-    # Create as many volumes as you need; better if under /app to avoid conflicts. 
-    # This is required so the app can read the files. You will use this later in environment variables (see below)
     volumes:
       - /your/path/to/movies:/app/media               # This is the path to the folder where the app will look for the files to process
       - /your/path/to/documents:/app/config           # This is the path to the database file, to the track_names.txt file, and to the replacements file. The app will create the database if it does not exist.
     environment:
-      - WorkingDirectory=/app/media                   # This is the default value to read into /media; notice volume matches here ... you can change it to /media/subfolder if the volume contains subfolders: /your/path/to/movies/subfolder
-      - ConfigurationDirectory=/app/config            # This is the default value to read and save the configuration files, which includes the database file, the track_names.txt file, and the replacements file; notice volume matches here
-      - DatabaseFile=mkvm.sqlite                      # Update this if you want to use a different name for the database file  (remember to update the volume too in the volumes section)
-      - ReplacementsFile=replacements.txt             # Update this if you want to use a different name for the replacements file (remember to update the volume too in the volumes section)
-      - TrackNamesFile=track_names.txt                # Update this if you want to use a different name for the track_names file (remember to update the volume too in the volumes section)
-      - ReplaceOriginal=False                         # If you want to replace the original file with the new one or generate a new file with a different name
+      - WorkingDirectory=/app/media                   # This is the default path the app will use to read your media; notice volume matches here ... you can change it to /media/subfolder if the volume contains subfolders, in case you only want to test a specific folder: /your/path/to/movies/subfolder
+      - ConfigurationDirectory=/app/config            # This is the default value to read and save the configuration files, which includes the database file, the track_names.txt file, and the replacements file; notice volume matches here too.
+      - DatabaseFile=mkvm.sqlite                      # Update this if you want to use a different name for the database file... if file does not exist, it will be created
+      - ReplacementsFile=replacements.txt             # Update this if you want to use a different name for the replacements file... if file does not exist, no replacements will be done; see example in the README.md
+      - TrackNamesFile=track_names.txt                # Update this if you want to use a different name for the track_names file... this is only created when ExtractTrackNamesOnly is set to True
+      - ReplaceOriginal=False                         # If you want to replace the original file with the new one or generate a new file with a different name... name format is automatically generated to avoid conflicts
       - OverwriteExisting=False                       # If you want to overwrite the new file if it already exists - not sure if this will ever be useful, but it's there
       - IncludeAllExtensions=False                    # Make sure to not include all extensions if under WorkingDirectory there are files that are not videos, this will make the app to crash (I am too lazy to fix it at this point)
       - Extensions=.mkv,.mp4,.avi                     # Not regex supported, just comma separated extensions with dot, case-insensitive
       - IncludeSubFolders=True                        # If you want to include subfolders in the search or only process file in the WorkingDirectory
       - UpdateListOfFilesProcessed=True               # Whether to save in the DB the list of files processed or not. 
       - IgnoreListOfFilesProcessed=False              # Be careful with this, it will ignore the list of files processed and will process all files in the WorkingDirectory, generating a lot of files if ReplaceOriginal is False and/or IncludeSubFolders is True
-      - TimeInMinutesBetweenExecutions=60             # This is the time in minutes between executions of the app
-      - ExtractTrackNamesOnly=False                   # Only extract track names of all files. This is useful to generate the replacements file. File is saved in /app/config/track_names.txt (if exists, it will be overwritten)
+      - TimeInMinutesBetweenExecutions=60             # This is the time in minutes between executions of the app loop
+      - ExtractTrackNamesOnly=False                   # Only extract track names of all files. This is useful to generate the replacements file, as it returns all the different track names. File is saved in /app/config/{TrackNamesFile} (if exists, it will be overwritten)
